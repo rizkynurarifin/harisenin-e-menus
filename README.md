@@ -19,7 +19,7 @@
 ## 🔧 Cara Menjalankan Proyek
 1. Clone repositori ini:
    ```bash
-   git clone [https://github.com/rizkynurarifin/harisenin-e-menus.git](https://github.com/rizkynurarifin/harisenin-e-menus.git)
+   git clone https://github.com/rizkynurarifin/harisenin-e-menus.git
 2. Masuk ke direktori proyek:
    ```bash
    cd harisenin-e-menus
@@ -30,4 +30,5 @@
     ```bash
     npm run dev
 5. Buka browser:
-    Aplikasi akan berjalan secara default di http://localhost:5173.
+   
+   Aplikasi akan berjalan secara default di http://localhost:5173.
