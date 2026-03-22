@@ -1,8 +1,14 @@
 import useThemeStore from "../store/theme";
+import type { Menu } from "../types/menu";
 import MenuButton from "./MenuButton";
 
-function MenuCard({ item, isDetail = false, onDelete, isDeleting }) {
-    
+interface MenuCardProps {
+    item: Menu;
+    isDetail?: boolean;
+    onDelete?: () => void;
+    isDeleting?: boolean;
+}
+const MenuCard: React.FC<MenuCardProps> = ({ item, isDetail = false, onDelete, isDeleting }) => {
     const darkMode = useThemeStore((state) => state.darkMode);
 
     return (

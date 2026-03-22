@@ -4,22 +4,21 @@ import axios from "axios";
 import useThemeStore from "../store/theme";
 import MenuButton from "../components/MenuButton";
 import "./menu.css";
+import type { FormAction, FormState } from "../types/menu";
 
-// 1. Initial State
-const initialState = {
+const initialState: FormState = {
     name: "",
-    price: "",
+    price: 0,
     category: "food",
     description: "",
 };
 
-// 2. Reducer Function
-const formReducer = (state, action) => {
+const formReducer = (state: FormState, action: FormAction): FormState => {
     switch (action.type) {
         case "CHANGE_INPUT":
             return {
                 ...state,
-                [action.field]: action.value,
+                [action.field]: action.value
             };
         case "RESET_FORM":
             return initialState;
@@ -28,24 +27,25 @@ const formReducer = (state, action) => {
     }
 };
 
-function MenuCreate() {
+const MenuCreate: React.FC = () => {
     const navigate = useNavigate();
     const darkMode = useThemeStore((state) => state.darkMode);
-    const [loading, setLoading] = useState(false);
-
-    // 3. Inisialisasi useReducer
+    const [loading, setLoading] = useState<boolean>(false);
     const [formData, dispatch] = useReducer(formReducer, initialState);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
+        
+        const finalValue = name === "price" ? (value === "" ? 0 : Number(value)) : value;
+
         dispatch({
             type: "CHANGE_INPUT",
             field: name,
-            value: value,
+            value: finalValue,
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
@@ -55,45 +55,43 @@ function MenuCreate() {
                 alert("Menu berhasil ditambahkan!");
                 navigate("/menu");
             })
-            .catch((error) => {
-                console.error("Gagal menambah menu:", error);
+            .catch((err) => {
+                console.error(err);
                 alert("Terjadi kesalahan.");
             })
-            .finally(() => {
-                setLoading(false);
-            });
+            .finally(() => setLoading(false));
     };
 
     return (
         <div className="container-detail">
             <div className="detail-focus-wrapper">
                 <button className="btn-close" onClick={() => navigate("/menu")}>×</button>
-                
+
                 <form className={`menu-card ${darkMode ? "dark" : ""}`} onSubmit={handleSubmit}>
                     <div className="card-body">
                         <h3>Tambah Menu</h3>
                         <div className="form-container">
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 name="name"
-                                placeholder="Nama Menu..." 
-                                className="custom-input" 
+                                placeholder="Nama Menu..."
+                                className="custom-input"
                                 value={formData.name}
                                 onChange={handleChange}
-                                required 
+                                required
                             />
-                            <input 
-                                type="number" 
+                            <input
+                                type="number"
                                 name="price"
-                                placeholder="Harga..." 
-                                className="custom-input" 
+                                placeholder="Harga..."
+                                className="custom-input"
                                 value={formData.price}
                                 onChange={handleChange}
-                                required 
+                                required
                             />
-                            <select 
-                                name="category" 
-                                className="custom-input" 
+                            <select
+                                name="category"
+                                className="custom-input"
                                 value={formData.category}
                                 onChange={handleChange}
                             >
@@ -101,11 +99,11 @@ function MenuCreate() {
                                 <option value="drink">Drink</option>
                                 <option value="snack">Snack</option>
                             </select>
-                            <textarea 
+                            <textarea
                                 name="description"
-                                placeholder="Deskripsi..." 
-                                className="custom-input" 
-                                rows="4"
+                                placeholder="Deskripsi..."
+                                className="custom-input"
+                                rows={4}
                                 value={formData.description}
                                 onChange={handleChange}
                             ></textarea>
@@ -114,10 +112,10 @@ function MenuCreate() {
 
                     <div className="card-footer">
                         <MenuButton to="/menu" label="Batal" className="btn-edit-detail" />
-                        <MenuButton 
-                            type="submit" 
-                            label={loading ? "Proses..." : "Simpan"} 
-                            className="btn-detail" 
+                        <MenuButton
+                            type="submit"
+                            label={loading ? "Proses..." : "Simpan"}
+                            className="btn-detail"
                             disabled={loading}
                         />
                     </div>

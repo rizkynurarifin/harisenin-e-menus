@@ -4,17 +4,16 @@ import useThemeStore from "../store/theme";
 import MenuButton from "../components/MenuButton";
 import "./menu.css";
 import axios from "axios";
+import type { FormAction, FormState } from "../types/menu";
 
-// 1. Initial State
-const initialState = {
+const initialState: FormState = {
     name: "",
-    price: "",
-    category: "",
+    price: 0,
+    category: "food",
     description: "",
 };
 
-// 2. Reducer Function
-const formReducer = (state, action) => {
+const formReducer = (state: FormState, action: FormAction): FormState => {
     switch (action.type) {
         case "FILL_FORM":
             return { ...action.payload };
@@ -28,18 +27,19 @@ const formReducer = (state, action) => {
     }
 };
 
-function MenuEdit() {
-    const { id } = useParams();
+const MenuEdit: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const darkMode = useThemeStore((state) => state.darkMode);
 
     const [formData, dispatch] = useReducer(formReducer, initialState);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [isUpdating, setIsUpdating] = useState(false);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
-    // 3. Fetch Data Awal (Read)
     useEffect(() => {
+        if (!id) return;
+
         axios
             .get(`https://6968be9069178471522b6774.mockapi.io/api/v1/menu/${id}`)
             .then((res) => {
@@ -53,17 +53,19 @@ function MenuEdit() {
             });
     }, [id]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
+
+        const finalValue = name === "price" ? (value === "" ? 0 : Number(value)) : value;
+
         dispatch({
             type: "CHANGE_INPUT",
             field: name,
-            value: value,
+            value: finalValue,
         });
     };
 
-    // 4. Handle Update (Put)
-    const handleUpdate = (e) => {
+    const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
         setIsUpdating(true);
 
@@ -82,7 +84,6 @@ function MenuEdit() {
             });
     };
 
-    // --- 1. Kondisi JIKA LOADING ---
     if (loading) {
         return (
             <div className="container-detail">
@@ -91,7 +92,6 @@ function MenuEdit() {
         );
     }
 
-    // --- 2. Kondisi JIKA ERROR (Data tidak ketemu) ---
     if (error) {
         return (
             <div className="container-detail">
@@ -106,7 +106,6 @@ function MenuEdit() {
         );
     }
 
-    // --- 3. Tampilan Normal (Jika data ada) ---
     return (
         <div className="container-detail">
             <div className="detail-focus-wrapper">
@@ -154,7 +153,7 @@ function MenuEdit() {
                             <textarea
                                 name="description"
                                 className="custom-input"
-                                rows="4"
+                                rows={4}
                                 value={formData.description}
                                 onChange={handleChange}
                             ></textarea>

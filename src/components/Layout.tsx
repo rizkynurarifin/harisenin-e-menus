@@ -3,7 +3,7 @@ import "./header.css";
 import { useEffect } from "react";
 import useThemeStore from "../store/theme";
 
-function Layout() {
+const Layout: React.FC = () => {
     const darkMode = useThemeStore((state) => state.darkMode);
     const toggleDarkMode = useThemeStore((state) => state.toggleDarkMode);
 
@@ -44,7 +44,6 @@ function Layout() {
                     </ul>
 
                     <div className="nav-profile">
-                        {/* Tombol switch menggunakan toggleDarkMode */}
                         <button className="theme-toggle" onClick={toggleDarkMode}>
                             {darkMode ? "☀️" : "🌙"}
                         </button>

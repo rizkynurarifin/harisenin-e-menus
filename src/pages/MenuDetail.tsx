@@ -3,20 +3,22 @@ import { useParams, NavLink, useNavigate } from 'react-router';
 import axios from 'axios';
 import MenuCard from "../components/MenuCard";
 import "./menu.css";
+import type { Menu } from '../types/menu';
 
-function MenuDetail() {
-    const { id } = useParams();
+const MenuDetail: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
-    // Inisialisasi state sesuai best practice untuk menghindari warning linter
-    const [item, setItem] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [item, setItem] = useState<Menu | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [isError, setIsError] = useState<boolean>(false);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
     useEffect(() => {
+        if (!id) return;
+
         axios
-            .get(`https://6968be9069178471522b6774.mockapi.io/api/v1/menu/${id}`)
+            .get<Menu>(`https://6968be9069178471522b6774.mockapi.io/api/v1/menu/${id}`)
             .then((response) => {
                 setItem(response.data);
             })
@@ -29,8 +31,7 @@ function MenuDetail() {
             });
     }, [id]);
 
-    // Fungsi Hapus Data
-    const handleDelete = () => {
+    const handleDelete = (): void => {
         if (window.confirm("Apakah Anda yakin ingin menghapus menu ini?")) {
             setIsDeleting(true);
             axios
@@ -49,7 +50,6 @@ function MenuDetail() {
         }
     };
 
-    // Handle Kondisi Loading
     if (loading) {
         return (
             <div className="container-detail">
@@ -58,7 +58,6 @@ function MenuDetail() {
         );
     }
 
-    // Handle Kondisi Error atau Data Tidak Ditemukan
     if (isError || !item) {
         return (
             <div className="container-detail error-page">
