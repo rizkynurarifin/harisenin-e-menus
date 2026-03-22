@@ -1,0 +1,287 @@
+/* Reset & Global Sync */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variabel sinkron dengan header.css */
+:root {
+    --bg-main: #ffffff;
+    --bg-card: #ffffff;
+    --border-color: #f1f5f9;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --bg-footer: #f8fafc;
+}
+
+.dark {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --border-color: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --bg-footer: #1e293b;
+}
+
+/* --- CONTAINER LAYOUTS --- */
+.container-list,
+.container-detail {
+    background-color: var(--bg-main);
+    width: 100%;
+    transition: background-color 0.3s ease;
+    padding: 30px 5%;
+}
+
+.container-list {
+    min-height: 100vh;
+}
+
+.container-detail {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+.menu-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.detail-focus-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    margin-top: 30px;
+}
+
+/* --- CARD STYLING --- */
+.menu-card {
+    background-color: var(--bg-card);
+    flex: 0 1 350px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border-radius: 20px;
+}
+
+/* Efek Hover Kartu */
+.menu-card:hover,
+.detail-focus-wrapper:hover .menu-card {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+
+.card-top {
+    padding: 20px 20px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.badge {
+    background-color: #fff7ed;
+    color: #ea580c;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.card-body {
+    padding: 20px 30px 30px;
+    flex-grow: 1;
+}
+
+.card-body h3 {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    font-weight: 800;
+    transition: color 0.3s ease;
+}
+
+.menu-price {
+    color: #10b981;
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.menu-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+/* --- FORM STYLING (Create & Edit) --- */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+    text-align: left; /* Biar label/input lebih rapi */
+}
+
+.custom-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+textarea.custom-input {
+    resize: none;
+}
+
+/* --- FOOTER & BUTTONS --- */
+.card-footer {
+    display: flex;
+    background-color: var(--bg-footer);
+    border-top: 2px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.card-footer a,
+.card-footer .dark-button,
+.btn-delete, .btn-detail,
+.btn-edit-detail {
+    flex: 1;
+    padding: 18px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: transparent !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-detail {
+    color: #3b82f6;
+    border-right: 2px solid var(--border-color) !important;
+}
+
+.btn-edit,
+.btn-edit-detail {
+    color: #f59e0b;
+}
+
+.btn-edit-detail {
+    border-right: 2px solid var(--border-color) !important;
+}
+
+.btn-delete {
+    color: #ef4444;
+}
+
+/* Tombol Close (Halaman Detail) */
+.btn-close {
+    position: absolute;
+    top: -45px;
+    right: 0;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    color: var(--text-main);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.detail-focus-wrapper:hover .btn-close {
+    transform: translateY(-12px);
+}
+
+.btn-close::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -20px;
+    right: -10px;
+    bottom: -20px;
+    background: transparent;
+}
+
+.btn-close:hover {
+    background-color: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+/* --- DARK MODE SPECIFIC --- */
+.menu-card.dark .badge {
+    background-color: rgba(234, 88, 12, 0.1);
+    color: #fdba74;
+}
+
+.menu-card.dark .card-body h3 {
+    color: #f8fafc !important;
+}
+
+.menu-card.dark .card-footer {
+    background-color: transparent !important;
+    border-top: 2px solid var(--border-color);
+}
+
+.menu-card.dark .btn-detail {
+    color: #60a5fa !important;
+}
+
+.menu-card.dark .btn-edit,
+.menu-card.dark .btn-edit-detail {
+    color: #fbbf24 !important;
+}
+
+.menu-card.dark .btn-delete {
+    color: #f87171 !important;
+}
+
+.menu-card.dark .card-footer a:hover,
+.menu-card.dark .btn-delete:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Responsivitas */
+@media (max-width: 1024px) {
+    .menu-card {
+        flex: 1 1 calc(50% - 30px);
+    }
+}
+
+@media (max-width: 700px) {
+    .menu-card {
+        flex: 1 1 100%;
+    }
+}

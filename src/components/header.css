@@ -1,0 +1,153 @@
+/* header.css */
+
+/* Root Variables untuk mempermudah transisi tema */
+:root {
+    --bg-navbar: rgba(255, 255, 255, 0.9);
+    --border-color: #f1f5f9;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+}
+
+/* Dark Mode Variables */
+.dark {
+    --bg-navbar: rgba(15, 23, 42, 0.9);
+    --border-color: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+.layout-wrapper {
+    min-height: 100vh;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+.dark .layout-wrapper {
+    background-color: #0f172a;
+}
+
+.navbar {
+    background-color: var(--bg-navbar);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.nav-item:hover {
+    color: #3b82f6;
+}
+
+.nav-item.active {
+    color: #10b981;
+}
+
+/* Section Kanan: Gabungkan Toggle dan Profile */
+.nav-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Style Tombol Theme Switcher */
+.theme-toggle {
+    background: #f8fafc;
+    border: 2px solid var(--border-color);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg) scale(1.1);
+    background: #f1f5f9;
+}
+
+.dark .theme-toggle {
+    background: #1e293b;
+    color: #f8fafc;
+}
+
+/* Profile Section */
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    padding: 8px 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 100px;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.dark .profile-info {
+    background: #1e293b;
+}
+
+.profile-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.content-area {
+    width: 100%;
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+    .profile-info span {
+        display: none;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+}
