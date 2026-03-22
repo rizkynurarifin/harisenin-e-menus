@@ -6,6 +6,8 @@ import MenuButton from "../components/MenuButton";
 import "./menu.css";
 import type { FormAction, FormState } from "../types/menu";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const initialState: FormState = {
     name: "",
     price: 0,
@@ -50,7 +52,7 @@ const MenuCreate: React.FC = () => {
         setLoading(true);
 
         axios
-            .post("https://6968be9069178471522b6774.mockapi.io/api/v1/menu", formData)
+            .post(API_URL, formData)
             .then(() => {
                 alert("Menu berhasil ditambahkan!");
                 navigate("/menu");

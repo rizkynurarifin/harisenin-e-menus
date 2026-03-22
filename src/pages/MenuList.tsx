@@ -4,6 +4,8 @@ import MenuCard from "../components/MenuCard";
 import { useEffect, useState } from "react";
 import type { Menu } from "../types/menu";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const MenuList: React.FC = () => {
     const [data, setData] = useState<Menu[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -11,7 +13,7 @@ const MenuList: React.FC = () => {
 
     useEffect(() => {
         axios
-            .get<Menu[]>("https://6968be9069178471522b6774.mockapi.io/api/v1/menu")
+            .get<Menu[]>(API_URL)
             .then((response) => {
                 setData(response.data);
             })

@@ -5,6 +5,8 @@ import MenuCard from "../components/MenuCard";
 import "./menu.css";
 import type { Menu } from '../types/menu';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const MenuDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -18,7 +20,7 @@ const MenuDetail: React.FC = () => {
         if (!id) return;
 
         axios
-            .get<Menu>(`https://6968be9069178471522b6774.mockapi.io/api/v1/menu/${id}`)
+            .get<Menu>(`${API_URL}/${id}`)
             .then((response) => {
                 setItem(response.data);
             })
